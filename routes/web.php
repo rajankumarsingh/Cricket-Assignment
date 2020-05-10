@@ -17,9 +17,11 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 	Route::get('/', function () { return view('admin.welcome'); });
 	Route::resource('teams', 'TeamsController');
 	Route::resource('players', 'PlayersController');
-	Route::resource('matches', 'MatchesController');
+	Route::resource('matches', 'MatchsController');
 });
-	
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'HomeController@index');	
+Route::get('team-details/{id}', 'HomeController@details')->name('team.details');
+Route::get('player-details/{id}', 'HomeController@player_details')->name('player.details');
+
+Route::get('team-matches/{id}', 'HomeController@matches')->name('team.matches');

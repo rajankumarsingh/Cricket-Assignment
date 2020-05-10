@@ -21,6 +21,13 @@
 				<table class="table table-hover">
 				  <tbody>
 					<tr><th>ID</th><td>{{ $team->id }}</td></tr>
+					<tr><th>Logo</th><td>
+					@if(!empty($team->logoUri))
+						<img src="{{url('public/'.$team->logoUri)}}" width="50" height="50">
+					@else
+						<img src="{{url('assets/images/noimg.png')}}" width="50" height="50">
+					@endif
+					</td></tr>
 					<tr><th>Name</th><td>{{ $team->name }}</td></tr>
 					<tr><th>Club State</th><td>{{ $team->clubState }}</td></tr>
 					<tr><th>Created At</th><td>{{ $team->created_at }}</td></tr>

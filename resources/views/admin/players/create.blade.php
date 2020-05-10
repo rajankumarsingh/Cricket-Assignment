@@ -25,9 +25,7 @@
 					</ul>
 				</div>
 		  @endif
-		  {{ Form::open(['route' => 'admin.players.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-player', 'files' => true]) }}
-			@csrf
-			
+		  {{ Form::open(['route' => 'admin.players.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-player', 'files' => true]) }}	
 			
 			<div class="row">
 
@@ -61,24 +59,32 @@
 				<div class="form-group">
 					{{ Form::label('teamId', 'Team', ['class' => 'bmd-label-floating']) }}
 					@if(!empty($teamId))
-						{{ Form::select('teamId', $teams, $teamId, ['class' => 'form-control', 'required' => 'required']) }}
+						{{ Form::select('teamId', $teams, $teamId, ['placeholder' => 'Choose Team','class' => 'form-control', 'required' => 'required']) }}
 					@else
-						{{ Form::select('teamId', $teams, null, ['class' => 'form-control', 'required' => 'required']) }}
+						{{ Form::select('teamId', $teams, null, ['placeholder' => 'Choose Team','class' => 'form-control', 'required' => 'required']) }}
 					@endif
 				</div>
 			  </div>
 			  
-			  <div class="col-md-12">
+			  <div class="col-md-6">
 				<div class="form-group">
 				  {{ Form::label('pic', 'Image', ['class' => 'bmd-label-floating']) }}
 				  <input type="file" name="pic" class="form-control">
 				</div>
 			  </div>
 			  
+			  <div class="col-md-12">
+				<div class="form-group">
+				  {{ Form::label('history', 'History', ['class' => 'bmd-label-floating']) }}
+				  {{ Form::textarea('history', null, ['class' => 'form-control','rows' => 5]) }}
+				</div>
+			  </div>
+			  
+			  
 			</div>
-			<button type="submit" class="btn btn-primary pull-right">Save</button>
+			{{ Form::submit('Save', ['class' => 'btn btn-primary pull-right']) }}
 			<div class="clearfix"></div>
-		  </form>
+		  {{ Form::close() }}
 		</div>
 	  </div>
 	</div>

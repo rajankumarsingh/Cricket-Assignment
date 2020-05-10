@@ -16,59 +16,16 @@
 
 <body class="dark-edition">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
-      <!--
-      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
-      Tip 2: you can also add an image using data-image tag
-  -->
-      <div class="logo">
-        <a href="javascript:;" class="simple-text logo-normal">
-          Cricket Assignment
-        </a>
-      </div>
-      <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li class="nav-item {{ (request()->segment(2) == 'teams') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.teams.index') }}">
-              <i class="material-icons">person</i>
-              <p>Teams</p>
-            </a>
-          </li>
-          <li class="nav-item {{ (request()->segment(2) == 'players') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.players.index') }}">
-              <i class="material-icons">person</i>
-              <p>Players</p>
-            </a>
-          </li>
-          <li class="nav-item {{ (request()->segment(2) == 'matches') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.matches.index') }}">
-              <i class="material-icons">library_books</i>
-              <p>Matches</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="main-panel">
+    
+    <div class="">
       <div class="content">
         <div class="container-fluid">
+			<h1 align="center">Cricket Assignment</h1>
           <!-- your content here -->
 		  @yield('content')
         </div>
       </div>
-      <footer class="footer">
-        <div class="container-fluid">
-          <nav class="float-left">
-            <ul>
-              <li>
-                
-              </li>
-            </ul>
-          </nav>
-          
-        </div>
-      </footer>
     </div>
   </div>
   <!--   Core JS Files   -->

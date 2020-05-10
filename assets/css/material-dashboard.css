@@ -13586,6 +13586,7 @@ select,
 select.form-control {
   -moz-appearance: none;
   -webkit-appearance: none;
+  color:#c8c5c2 !important;
 }
 
 @media (min-width: 576px) {

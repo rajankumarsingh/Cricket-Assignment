@@ -18,9 +18,9 @@ class CreatePlayersTable extends Migration
 			$table->string('firstName');
 			$table->string('lastName');
 			$table->string('imageUri');
-			$table->string('jerseyNumber');
+			$table->integer('jerseyNumber');
 			$table->string('country');
-			$table->string('history');
+			$table->text('history');
             $table->timestamps();
         });
     }

@@ -18,6 +18,8 @@ class CreateMatchesTable extends Migration
 			$table->dateTime('scheduledDate');
 			$table->integer('teamA');
 			$table->integer('teamB');
+			$table->integer('teamApoints');
+			$table->integer('teamBpoints');
 			$table->integer('winner');
             $table->timestamps();
         });

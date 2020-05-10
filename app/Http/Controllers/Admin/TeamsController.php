@@ -44,11 +44,19 @@ class TeamsController extends Controller
             'clubState' => 'required',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-		$destinationPath = public_path('uploads/logos');
-        $imageName = time().'.'.$request->logo->extension();   
-        $request->logo->move($destinationPath, $imageName);
-		$request->logoUri = $destinationPath.'/'.$imageName;
-        Team::create($request->all());   
+		
+		$team = new Team($request->input()) ;
+		
+		if($file = $request->hasFile('logo')) {
+            
+            $file = $request->file('logo') ;            
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path('uploads/logos');
+            $file->move($destinationPath,$fileName);
+            $team->logoUri = $destinationPath.'/'.$fileName ;
+        }
+		
+		$team->save(); 
         return redirect()->route('admin.teams.index')
                         ->with('success','Team created successfully.');
     }
@@ -87,10 +95,18 @@ class TeamsController extends Controller
         $request->validate([
             'name' => 'required',
             'clubState' => 'required',
+			'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-  
-        $team->update($request->all());
-  
+				
+		if($file = $request->hasFile('logo')) {
+            
+            $file = $request->file('logo') ;            
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path('uploads/logos');
+            $file->move($destinationPath,$fileName);
+            $team->logoUri = 'uploads/logos/'.$fileName ;
+        }		
+		$team->save();  
         return redirect()->route('admin.teams.index')
                         ->with('success','Team updated successfully');
     }

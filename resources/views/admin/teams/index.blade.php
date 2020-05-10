@@ -35,18 +35,25 @@
 				  </thead>
 				  <tbody>
 					@foreach ($teams as $team)
+					
 					<tr>
 						<td>{{ $team->id }}</td>
-						<td>{{ $team->name }}</td>
+						<td>
+						@if(!empty($team->logoUri))
+							<img src="{{url('public/'.$team->logoUri)}}" width="50" height="50">
+						@else
+							<img src="{{url('assets/images/noimg.png')}}" width="50" height="50">
+						@endif
+						</td>
 						<td>{{ $team->name }}</td>
 						<td>{{ $team->clubState }}</td>
 						<td>{{ $team->created_at }}</td>
 						<td>
 							<form action="{{ route('admin.teams.destroy',$team->id) }}" method="POST">
 			   
-								<a class="btn btn-info" href="{{ route('admin.teams.show',$team->id) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a class="btn btn-info" href="{{ route('admin.teams.show',$team->id) }}" title="Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
 				
-								<a class="btn btn-primary" href="{{ route('admin.teams.edit',$team->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								<a class="btn btn-primary" href="{{ route('admin.teams.edit',$team->id) }}" title="Matches"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 			   
 								@csrf
 								@method('DELETE')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Match;
 use Illuminate\Http\Request;
+use App\Team;
 
 class MatchsController extends Controller
 {
@@ -15,7 +16,10 @@ class MatchsController extends Controller
      */
     public function index()
     {
-        //
+        $matches = Match::latest()->paginate(5);
+  
+        return view('admin.matches.index',compact('matches'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -25,7 +29,8 @@ class MatchsController extends Controller
      */
     public function create()
     {
-        //
+        $teams = Team::pluck('name', 'id');
+        return view('admin.matches.create', compact('teams'));
     }
 
     /**
@@ -36,7 +41,15 @@ class MatchsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'scheduledDate' => 'required',
+			'teamA' => 'required',
+			'teamB' => 'required',
+        ]);
+
+        Match::create($request->all());   
+        return redirect()->route('admin.matches.index')
+                        ->with('success','Matches created successfully.');
     }
 
     /**
@@ -47,7 +60,7 @@ class MatchsController extends Controller
      */
     public function show(Match $match)
     {
-        //
+        return view('admin.matches.show',compact('match'));
     }
 
     /**
@@ -58,7 +71,8 @@ class MatchsController extends Controller
      */
     public function edit(Match $match)
     {
-        //
+        $teams = Team::pluck('name', 'id');
+        return view('admin.matches.edit',compact('match','teams'));
     }
 
     /**
@@ -70,7 +84,16 @@ class MatchsController extends Controller
      */
     public function update(Request $request, Match $match)
     {
-        //
+        $request->validate([
+            'scheduledDate' => 'required',
+			'teamA' => 'required',
+			'teamB' => 'required',
+        ]);
+		//dd($request->all());
+        $match->update($request->all());
+  
+        return redirect()->route('admin.matches.index')
+                        ->with('success','Match updated successfully');
     }
 
     /**
@@ -81,6 +104,8 @@ class MatchsController extends Controller
      */
     public function destroy(Match $match)
     {
-        //
+        $match->delete();  
+        return redirect()->route('admin.matches.index')
+                        ->with('success','Match deleted successfully');
     }
 }

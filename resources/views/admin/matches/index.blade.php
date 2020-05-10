@@ -7,7 +7,7 @@
 			<div class="pull-left">
 			</div>
 			<div class="pull-right">
-				<a class="btn btn-success" href="{{ route('admin.teams.create') }}"> Create New Team</a>
+				<a class="btn btn-success" href="{{ route('admin.matches.create') }}"> Create New Match</a>
 			</div>
 		</div>
 		@if ($message = Session::get('success'))
@@ -20,33 +20,33 @@
 		<div class="col-md-12">
 		  <div class="card">
 			<div class="card-header card-header-primary">
-			  <h4 class="card-title ">Team Management</h4>
+			  <h4 class="card-title ">Matches Management</h4>
 			</div>
 			<div class="card-body">
 			  <div class="table-responsive">
 				<table class="table table-hover">
 				  <thead class=" text-primary">
 					<th>ID</th>
-					<th>Logo</th>
-					<th>Name</th>
-					<th>State</th>
-					<th>Date</th>
+					<th>Scheduled Date</th>
+					<th>Team A</th>
+					<th>Team B</th>
+					<th>Winner</th>
 					<th>Actions</th>
 				  </thead>
 				  <tbody>
-					@foreach ($teams as $team)
+					@foreach ($matches as $match)
 					<tr>
-						<td>{{ $team->id }}</td>
-						<td>{{ $team->name }}</td>
-						<td>{{ $team->name }}</td>
-						<td>{{ $team->clubState }}</td>
-						<td>{{ $team->created_at }}</td>
+						<td>{{ $match->id }}</td>
+						<td>{{ $match->scheduledDate }}</td>
+						<td>{{ $match->teamAD->name }}</td>
+						<td>{{ $match->teamBD->name }}</td>
+						<td>{{ $match->winner ? $match->winnerD->name :'' }}</td>
 						<td>
-							<form action="{{ route('admin.teams.destroy',$team->id) }}" method="POST">
+							<form action="{{ route('admin.matches.destroy',$match->id) }}" method="POST">
 			   
-								<a class="btn btn-info" href="{{ route('admin.teams.show',$team->id) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<a class="btn btn-info" href="{{ route('admin.matches.show',$match->id) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
 				
-								<a class="btn btn-primary" href="{{ route('admin.teams.edit',$team->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								<a class="btn btn-primary" href="{{ route('admin.matches.edit',$match->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 			   
 								@csrf
 								@method('DELETE')
@@ -58,7 +58,7 @@
 					@endforeach
 				  </tbody>
 				</table>
-				{!! $teams->links() !!}
+				{!! $matches->links() !!}
 			  </div>
 			</div>
 		  </div>

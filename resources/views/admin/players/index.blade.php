@@ -27,19 +27,30 @@
 				<table class="table table-hover">
 				  <thead class=" text-primary">
 					<th>ID</th>
-					<th>Logo</th>
+					<th>Image</th>
 					<th>Name</th>
-					<th>State</th>
+					<th>Jersey No.</th>
+					<th>Country</th>
+					<th>Team</th>
 					<th>Date</th>
 					<th>Actions</th>
 				  </thead>
 				  <tbody>
+					
 					@foreach ($players as $player)
 					<tr>
 						<td>{{ $player->id }}</td>
-						<td>{{ $player->name }}</td>
-						<td>{{ $player->name }}</td>
-						<td>{{ $player->clubState }}</td>
+						<td>
+						@if(!empty($player->imageUri))
+							<img src="{{url('public/'.$player->imageUri)}}" width="50" height="50">
+						@else
+							<img src="{{url('assets/images/noimg.png')}}" width="50" height="50">
+						@endif
+						</td>
+						<td>{{ $player->firstName.' '.$player->lastName }}</td>
+						<td>{{ $player->jerseyNumber }}</td>
+						<td>{{ $player->country }}</td>
+						<td>{{ $player->team->name }}</td>
 						<td>{{ $player->created_at }}</td>
 						<td>
 							<form action="{{ route('admin.players.destroy',$player->id) }}" method="POST">

@@ -25,32 +25,31 @@
 					</ul>
 				</div>
 		  @endif
-		  <form action="{{ route('admin.teams.store') }}" method="POST" enctype="multipart/form-data">
-			@csrf
+		  {{ Form::open(['route' => 'admin.teams.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-team', 'files' => true]) }}
 			<div class="row">
 
 			  <div class="col-md-12">
 				<div class="form-group">
-				  <label class="bmd-label-floating">Name</label>
-				  <input type="text" id="name" name="name" class="form-control">
+				  {{ Form::label('name', 'Name', ['class' => 'bmd-label-floating']) }}
+				  {{ Form::text('name', null, ['class' => 'form-control','required' => 'required']) }}
 				</div>
 			  </div>
 			  <div class="col-md-12">
 				<div class="form-group">
-				  <label class="bmd-label-floating">Logo</label>
+				  {{ Form::label('logo', 'Logo', ['class' => 'bmd-label-floating']) }}
 				  <input type="file" name="logo" class="form-control">
 				</div>
 			  </div>
 			  <div class="col-md-12">
 				<div class="form-group">
-				  <label class="bmd-label-floating">State</label>
-				  <input type="text" id="clubState" name="clubState" class="form-control">
+				  {{ Form::label('clubState', 'Club State', ['class' => 'bmd-label-floating']) }}
+				  {{ Form::text('clubState', null, ['class' => 'form-control','required' => 'required']) }}
 				</div>
 			  </div>
 			</div>
-			<button type="submit" class="btn btn-primary pull-right">Save</button>
+			{{ Form::submit('Save', ['class' => 'btn btn-primary pull-right']) }}
 			<div class="clearfix"></div>
-		  </form>
+		  {{ Form::close() }}
 		</div>
 	  </div>
 	</div>

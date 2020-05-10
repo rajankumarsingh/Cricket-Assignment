@@ -6,13 +6,13 @@
 		<div class="pull-left">
 		</div>
 		<div class="pull-right">
-			<a class="btn btn-success" href="{{ route('admin.teams.index') }}"> Back to Lists</a>
+			<a class="btn btn-success" href="{{ route('admin.matches.index') }}"> Back to Lists</a>
 		</div>
 	</div>
 	<div class="col-md-12">
 	  <div class="card">
 		<div class="card-header card-header-primary">
-		  <h4 class="card-title">Add New Team</h4>
+		  <h4 class="card-title">Add New Match</h4>
 		</div>
 		<div class="card-body">
 		  @if ($errors->any())
@@ -25,32 +25,41 @@
 					</ul>
 				</div>
 		  @endif
-		  <form action="{{ route('admin.teams.store') }}" method="POST" enctype="multipart/form-data">
-			@csrf
+		  {{ Form::open(['route' => 'admin.matches.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-match', 'files' => true]) }}	
+			
 			<div class="row">
 
-			  <div class="col-md-12">
+			  <div class="col-md-4">
 				<div class="form-group">
-				  <label class="bmd-label-floating">Name</label>
-				  <input type="text" id="name" name="name" class="form-control">
+				  {{ Form::label('scheduledDate', 'Scheduled Date (YYYY-MM-DD hh:ii:ss)', ['class' => 'bmd-label-floating']) }}
+				  {{ Form::text('scheduledDate', null, ['class' => 'form-control datepicker','required' => 'required']) }}
 				</div>
 			  </div>
-			  <div class="col-md-12">
+			  <div class="col-md-4">
 				<div class="form-group">
-				  <label class="bmd-label-floating">Logo</label>
-				  <input type="file" name="logo" class="form-control">
+				    {{ Form::label('teamA', 'Team A', ['class' => 'bmd-label-floating']) }}
+					@if(!empty($match->teamA))
+						{{ Form::select('teamA', $teams, $match->teamA, ['placeholder' => 'Choose Team','class' => 'form-control', 'required' => 'required']) }}
+					@else
+						{{ Form::select('teamA', $teams, null, ['placeholder' => 'Choose Team','class' => 'form-control', 'required' => 'required']) }}
+					@endif
 				</div>
 			  </div>
-			  <div class="col-md-12">
+			  <div class="col-md-4">
 				<div class="form-group">
-				  <label class="bmd-label-floating">State</label>
-				  <input type="text" id="clubState" name="clubState" class="form-control">
+				    {{ Form::label('teamB', 'Team B', ['class' => 'bmd-label-floating']) }}
+					@if(!empty($match->teamB))
+						{{ Form::select('teamB', $teams, $match->teamB, ['placeholder' => 'Choose Team','class' => 'form-control', 'required' => 'required']) }}
+					@else
+						{{ Form::select('teamB', $teams, null, ['placeholder' => 'Choose Team','class' => 'form-control', 'required' => 'required']) }}
+					@endif
 				</div>
-			  </div>
+			  </div>			  
+			  
 			</div>
-			<button type="submit" class="btn btn-primary pull-right">Save</button>
+			{{ Form::submit('Save', ['class' => 'btn btn-primary pull-right']) }}
 			<div class="clearfix"></div>
-		  </form>
+		  {{ Form::close() }}
 		</div>
 	  </div>
 	</div>

@@ -42,15 +42,23 @@ class PlayersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'clubState' => 'required',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-		$destinationPath = public_path('uploads/logos');
-        $imageName = time().'.'.$request->logo->extension();   
-        $request->logo->move($destinationPath, $imageName);
-		$request->logoUri = $destinationPath.'/'.$imageName;
-        Team::create($request->all());   
+            'firstName' => 'required',
+			'lastName' => 'required',
+			'jerseyNumber' => 'required',
+			'country' => 'required',
+            'teamId' => 'required',
+            'pic' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]); 
+		$player = new Player($request->input()) ;
+		if($file = $request->hasFile('pic'))
+		{  
+            $file = $request->file('pic') ;            
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path('uploads/players');
+            $file->move($destinationPath,$fileName);
+            $player->imageUri = 'uploads/players/'.$fileName ;
+        }		
+		$player->save(); 
         return redirect()->route('admin.players.index')
                         ->with('success','Player created successfully.');
     }
@@ -74,7 +82,8 @@ class PlayersController extends Controller
      */
     public function edit(Player $player)
     {
-        return view('admin.players.edit',compact('player'));
+		$teams = Team::pluck('name', 'id');
+        return view('admin.players.edit',compact('player','teams'));
     }
 
     /**
@@ -87,12 +96,23 @@ class PlayersController extends Controller
     public function update(Request $request, Player $player)
     {
         $request->validate([
-            'name' => 'required',
-            'clubState' => 'required',
+            'firstName' => 'required',
+			'lastName' => 'required',
+			'jerseyNumber' => 'required',
+			'country' => 'required',
+            'teamId' => 'required',
         ]);
-  
-        $player->update($request->all());
-  
+		//dd($request->all());
+		
+		if($file = $request->hasFile('pic'))
+		{  
+            $file = $request->file('pic') ;            
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path('uploads/players');
+            $file->move($destinationPath,$fileName);
+            $player->imageUri = 'uploads/players/'.$fileName ;
+        }		
+		$player->save();  
         return redirect()->route('admin.players.index')
                         ->with('success','Player updated successfully');
     }
@@ -105,8 +125,7 @@ class PlayersController extends Controller
      */
     public function destroy(Player $player)
     {
-        $player->delete();
-  
+        $player->delete();  
         return redirect()->route('admin.players.index')
                         ->with('success','Player deleted successfully');
     }
